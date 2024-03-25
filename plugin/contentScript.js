@@ -74,10 +74,52 @@ function replaceTextOnPage() {
             // Now, remove all collected elements
             elementsToRemove.forEach(el => el.remove());
         }
-        // Handle 'for' loop replacement
-        // TODO: replace 'for' loop with GreenCode suggest
-        // Handle comparison type replacement
-        // TODO: replace 'comparison' loop with GreenCode suggest about comparing different types
+        // Handle '<' replacement
+        else if (operator.textContent === '<' || operator.textContent === '>' || operator.textContent === '==') {
+             console.log("Got a <")
+            // Attempt to find the parent element that represents the whole line of code
+            let lineElement = operator.parentElement;
+            // Ensure that we only select the parent element if it contains only one line of code
+            // This check depends on the structure of your code editor's markup
+            if (lineElement &&
+                (lineElement.textContent.includes('<') ||
+                    lineElement.textContent.includes('>') ||
+                    lineElement.textContent.includes('=='))) {
+                const greenCodeText = document.createElement('span');
+                greenCodeText.textContent = "GreenCode: Ensure that only variables of the same type are compared";
+                greenCodeText.style.color = 'black';
+                greenCodeText.style.backgroundColor = 'lightgreen';
+                greenCodeText.style.padding = '2px 4px';
+                greenCodeText.style.borderRadius = '4px';
+                greenCodeText.style.display = 'block'; // Ensure it takes up the full line
+
+                // Replace the entire line with the GreenCode message
+                lineElement.parentNode.replaceChild(greenCodeText, lineElement);
+            }
+        }
+    });
+
+    const keywordElements = document.querySelectorAll('.cm-keyword');
+
+    keywordElements.forEach(keyword => {
+        if (keyword.textContent === 'for') {
+            // Attempt to find the parent element that represents the whole line of code
+            let lineElement = keyword.parentElement;
+            // Ensure that we only select the parent element if it contains only one line of code
+            // This check depends on the structure of your code editor's markup
+            if (lineElement && lineElement.textContent.includes('for')) {
+                const greenCodeText = document.createElement('span');
+                greenCodeText.textContent = "GreenCode: Consider using array methods like .map, etc., instead of 'for' loops";
+                greenCodeText.style.color = 'black';
+                greenCodeText.style.backgroundColor = 'lightgreen';
+                greenCodeText.style.padding = '2px 4px';
+                greenCodeText.style.borderRadius = '4px';
+                greenCodeText.style.display = 'block'; // Ensure it takes up the full line
+
+                // Replace the entire line with the GreenCode message
+                lineElement.parentNode.replaceChild(greenCodeText, lineElement);
+            }
+        }
     });
 }
 
