@@ -3,6 +3,7 @@ function replaceTextOnPage() {
 
     operatorElements.forEach(operator => {
         if (operator.textContent === '**') {
+            console.log("found a **")
             // Attempt to find the parent element that represents the whole line of code
             let lineElement = operator.parentElement;
             // Ensure that we only select the parent element if it contains only one line of code
@@ -17,7 +18,9 @@ function replaceTextOnPage() {
                 greenCodeText.style.display = 'block'; // Ensure it takes up the full line
 
                 // Replace the entire line with the GreenCode message
-                lineElement.parentNode.replaceChild(greenCodeText, lineElement);
+                if (lineElement.parentNode !== null) {
+                    lineElement.parentNode.replaceChild(greenCodeText, lineElement);
+                }
             }
         }
         // Handle '+' replacement
@@ -94,7 +97,10 @@ function replaceTextOnPage() {
                 greenCodeText.style.display = 'block'; // Ensure it takes up the full line
 
                 // Replace the entire line with the GreenCode message
-                lineElement.parentNode.replaceChild(greenCodeText, lineElement);
+                if (lineElement.parentNode !== null) {
+                    lineElement.parentNode.replaceChild(greenCodeText, lineElement);
+                }
+
             }
         }
     });
@@ -103,6 +109,7 @@ function replaceTextOnPage() {
 
     keywordElements.forEach(keyword => {
         if (keyword.textContent === 'for') {
+            console.log("found a for")
             // Attempt to find the parent element that represents the whole line of code
             let lineElement = keyword.parentElement;
             // Ensure that we only select the parent element if it contains only one line of code
@@ -117,7 +124,9 @@ function replaceTextOnPage() {
                 greenCodeText.style.display = 'block'; // Ensure it takes up the full line
 
                 // Replace the entire line with the GreenCode message
-                lineElement.parentNode.replaceChild(greenCodeText, lineElement);
+                if (lineElement.parentNode !== null) {
+                    lineElement.parentNode.replaceChild(greenCodeText, lineElement);
+                }
             }
         }
     });
