@@ -2,21 +2,22 @@ function replaceTextOnPage() {
     const operatorElements = document.querySelectorAll('.cm-operator');
 
     operatorElements.forEach(operator => {
-        // Handle '**' replacement
-        if (operator.textContent === '**' && operator.previousElementSibling && operator.nextElementSibling) {
-            const prevElement = operator.previousElementSibling;
-            const nextElement = operator.nextElementSibling;
-            if (prevElement.classList.contains('cm-variable')) {
+        if (operator.textContent === '**') {
+            // Attempt to find the parent element that represents the whole line of code
+            let lineElement = operator.parentElement;
+            // Ensure that we only select the parent element if it contains only one line of code
+            // This check depends on the structure of your code editor's markup
+            if (lineElement) {
                 const greenCodeText = document.createElement('span');
-                greenCodeText.textContent = `GreenCode: * chains ${prevElement.textContent}*${prevElement.textContent}*... are faster than using **`;
+                greenCodeText.textContent = "GreenCode: using * is faster than using **";
                 greenCodeText.style.color = 'black';
                 greenCodeText.style.backgroundColor = 'lightgreen';
                 greenCodeText.style.padding = '2px 4px';
                 greenCodeText.style.borderRadius = '4px';
-                prevElement.parentNode.insertBefore(greenCodeText, prevElement);
-                prevElement.remove();
-                operator.remove();
-                nextElement.remove();
+                greenCodeText.style.display = 'block'; // Ensure it takes up the full line
+
+                // Replace the entire line with the GreenCode message
+                lineElement.parentNode.replaceChild(greenCodeText, lineElement);
             }
         }
         // Handle '+' replacement
@@ -76,7 +77,6 @@ function replaceTextOnPage() {
         }
         // Handle '<' replacement
         else if (operator.textContent === '<' || operator.textContent === '>' || operator.textContent === '==') {
-             console.log("Got a <")
             // Attempt to find the parent element that represents the whole line of code
             let lineElement = operator.parentElement;
             // Ensure that we only select the parent element if it contains only one line of code
