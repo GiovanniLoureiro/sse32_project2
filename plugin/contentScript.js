@@ -2,7 +2,7 @@ function replaceTextOnPage() {
     const operatorElements = document.querySelectorAll('.cm-operator');
 
     operatorElements.forEach(operator => {
-        if (operator.textContent === '**') {
+        if (operator.textContent === '**' && operator.parentElement !== null && operator.parentElement.parentNode !== null) {
             console.log("found a **")
             // Attempt to find the parent element that represents the whole line of code
             let lineElement = operator.parentElement;
@@ -18,9 +18,7 @@ function replaceTextOnPage() {
                 greenCodeText.style.display = 'block'; // Ensure it takes up the full line
 
                 // Replace the entire line with the GreenCode message
-                if (lineElement.parentNode !== null) {
-                    lineElement.parentNode.replaceChild(greenCodeText, lineElement);
-                }
+                lineElement.parentNode.replaceChild(greenCodeText, lineElement);
             }
         }
         // Handle '+' replacement
@@ -79,7 +77,8 @@ function replaceTextOnPage() {
             elementsToRemove.forEach(el => el.remove());
         }
         // Handle '<' replacement
-        else if (operator.textContent === '<' || operator.textContent === '>' || operator.textContent === '==') {
+        else if ((operator.textContent === '<' || operator.textContent === '>' || operator.textContent === '==')
+            && operator.parentElement !== null && operator.parentElement.parentNode !== null) {
             // Attempt to find the parent element that represents the whole line of code
             let lineElement = operator.parentElement;
             // Ensure that we only select the parent element if it contains only one line of code
@@ -97,10 +96,7 @@ function replaceTextOnPage() {
                 greenCodeText.style.display = 'block'; // Ensure it takes up the full line
 
                 // Replace the entire line with the GreenCode message
-                if (lineElement.parentNode !== null) {
-                    lineElement.parentNode.replaceChild(greenCodeText, lineElement);
-                }
-
+                lineElement.parentNode.replaceChild(greenCodeText, lineElement);
             }
         }
     });
@@ -108,7 +104,7 @@ function replaceTextOnPage() {
     const keywordElements = document.querySelectorAll('.cm-keyword');
 
     keywordElements.forEach(keyword => {
-        if (keyword.textContent === 'for') {
+        if (keyword.textContent === 'for' && keyword.parentElement !== null) {
             console.log("found a for")
             // Attempt to find the parent element that represents the whole line of code
             let lineElement = keyword.parentElement;
@@ -124,9 +120,7 @@ function replaceTextOnPage() {
                 greenCodeText.style.display = 'block'; // Ensure it takes up the full line
 
                 // Replace the entire line with the GreenCode message
-                if (lineElement.parentNode !== null) {
-                    lineElement.parentNode.replaceChild(greenCodeText, lineElement);
-                }
+                lineElement.parentNode.replaceChild(greenCodeText, lineElement);
             }
         }
     });
