@@ -86,7 +86,11 @@ function replaceTextOnPage() {
             if (lineElement &&
                 (lineElement.textContent.includes('<') ||
                     lineElement.textContent.includes('>') ||
-                    lineElement.textContent.includes('=='))) {
+                    lineElement.textContent.includes('==') ||
+                    lineElement.textContent.includes('<=') ||
+                    lineElement.textContent.includes('=<') ||
+                    lineElement.textContent.includes('>=') ||
+                    lineElement.textContent.includes('=>'))) {
                 const greenCodeText = document.createElement('span');
                 greenCodeText.textContent = "GreenCode: Ensure that only variables of the same type are compared";
                 greenCodeText.style.color = 'black';
